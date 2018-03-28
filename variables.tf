@@ -39,6 +39,7 @@ variable "lb_tags" {
 }
 
 variable "tg_health_check" {
+  default     = {}
   description = "the default target group's health check configuration, will be merged over the default (see locals.tf)"
 }
 
