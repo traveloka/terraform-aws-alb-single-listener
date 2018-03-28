@@ -11,5 +11,16 @@ locals {
 }
 
 locals {
+  tg_health_check = {
+    "interval"            = 30
+    "path"                = "/healthcheck"
+    "port"                = 5000
+    "healthy_threshold"   = 3
+    "unhealthy_threshold" = 3
+    "timeout"             = 5
+    "protocol"            = "HTTP"
+    "matcher"             = "200"
+  }
+
   r53_record_name = "${var.r53_record_name == "" ? format("%s-%s", var.tag_service_name, var.tag_environment) : var.r53_record_name}"
 }

@@ -49,7 +49,7 @@ resource "aws_lb_listener" "main" {
   load_balancer_arn = "${aws_lb.main.arn}"
   port              = 443
   protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  ssl_policy        = "${var.listener_ssl_policy}"
   certificate_arn   = "${var.listener_certificate_arn}"
 
   default_action {
@@ -65,7 +65,7 @@ resource "aws_lb_target_group" "default" {
   vpc_id               = "${var.vpc_id}"
   deregistration_delay = "${var.tg_deregistration_delay}"
 
-  health_check = ["${var.tg_healthcheck}"]
+  health_check = ["${local.tg_health_check}"]
 
   stickiness = ["${var.tg_stickiness}"]
 

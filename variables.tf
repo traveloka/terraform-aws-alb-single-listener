@@ -38,19 +38,8 @@ variable "lb_tags" {
   description = "the additional LB tags that will be merged over the default tags"
 }
 
-variable "tg_healthcheck" {
-  default = {
-    "interval"            = 30
-    "path"                = "/healthcheck"
-    "port"                = 5000
-    "healthy_threshold"   = 3
-    "unhealthy_threshold" = 3
-    "timeout"             = 5
-    "protocol"            = "HTTP"
-    "matcher"             = "200"
-  }
-
-  description = "the default target group's health check configuration"
+variable "tg_health_check" {
+  description = "the default target group's health check configuration, will be merged over the default (see locals.tf)"
 }
 
 variable "tg_stickiness" {
@@ -91,6 +80,11 @@ variable "tg_tags" {
 variable "listener_certificate_arn" {
   type        = "string"
   description = "the LB listener's certificate ARN"
+}
+
+variable "listener_ssl_policy" {
+  default     = "ELBSecurityPolicy-2016-08"
+  description = "the LB listener's SSL policy"
 }
 
 variable "listener_conditions" {
