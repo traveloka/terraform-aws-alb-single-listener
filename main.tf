@@ -41,6 +41,7 @@ resource "aws_lb" "main" {
     "Name", local.lb_name,
     "Service", var.tag_service_name,
     "Environment", var.tag_environment,
+    "ProductDomain", var.tag_product_domain,
     "Description", var.tag_description,
     ), var.lb_tags)}"
 }
@@ -73,6 +74,7 @@ resource "aws_lb_target_group" "default" {
     "Name", local.tg_name,
     "Service", var.tag_service_name,
     "Environment", var.tag_environment,
+    "ProductDomain", var.tag_product_domain,
     "Description", var.tag_description,
     ), var.tg_tags)}"
 }

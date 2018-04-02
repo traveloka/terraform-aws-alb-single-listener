@@ -105,7 +105,7 @@ variable "listener_ssl_policy" {
 variable "listener_conditions" {
   type        = "list"
   default     = []
-  description = "List of conditions (https://www.terraform.io/docs/providers/aws/r/lb_listener_rule.html#condition) for the listener rules. A rule can have either 1 or 2 conditions. The rule order represents its priority, starting from the higher priorities"
+  description = "List of conditions (https://www.terraform.io/docs/providers/aws/r/lb_listener_rule.html#condition) for the listener rules. A rule can have either 1 or 2 conditions. The rule's order will be its priority, i.e. the first is the highest"
 }
 
 variable "listener_target_group_idx" {
@@ -131,14 +131,17 @@ variable "tag_service_name" {
 
 variable "tag_description" {
   type        = "string"
-  default     = true
   description = "Will be used in resources' Description tag"
 }
 
 variable "tag_environment" {
   type        = "string"
-  default     = true
   description = "Will be used in resources' Environment tag"
+}
+
+variable "tag_product_domain" {
+  type        = "string"
+  description = "Abbreviation of the product domain the created resources belong to"
 }
 
 variable "target_group_arns" {

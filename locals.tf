@@ -1,4 +1,4 @@
-resource "random_string" "lb_suffix" {
+resource "random_id" "lb_suffix" {
   length  = 8
   upper   = false
   special = false

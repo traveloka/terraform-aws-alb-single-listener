@@ -6,11 +6,11 @@ variable "frontend-condition" {
   default = [
     {
       "field"  = "host-header"
-      "values" = ["fpr.traveloka.com"]
+      "values" = ["m.traveloka.com"]
     },
     {
       "field"  = "path-pattern"
-      "values" = ["/*/g"]
+      "values" = ["/frontend/"]
     },
   ]
 }
@@ -19,7 +19,7 @@ variable "backend-canary-condition" {
   default = [
     {
       "field"  = "path-pattern"
-      "values" = ["/backend/*"]
+      "values" = ["/canary/"]
     },
   ]
 }
@@ -28,7 +28,7 @@ variable "backend-default-condition" {
   default = [
     {
       "field"  = "host-header"
-      "values" = ["m.traveloka.com"]
+      "values" = ["fpr.traveloka.com"]
     },
   ]
 }
@@ -98,9 +98,10 @@ resource "aws_lb_target_group" "backend-canary" {
 module "alb-route53" {
   source                   = "../.."
   lb_logs_s3_bucket_name   = "gone-with-the-wind"
-  tag_service_name         = "flight"
+  tag_service_name         = "fprab-app"
   tag_environment          = "production"
-  tag_description          = "Flight backend Application Load Balancer"
+  tag_product_domain       = "fpr"
+  tag_description          = "Flight AB App's Application Load Balancer"
   listener_certificate_arn = "arn:aws:acm:ap-southeast-1:123456789012:certificate/casablanca"
   lb_security_groups       = ["sg-b0c9ed17"]
   lb_subnet_ids            = ["subnet-e099dc3f", "subnet-9eb519e8"]

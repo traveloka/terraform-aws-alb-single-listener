@@ -4,7 +4,7 @@ A terraform module which provisions a DNS record that points to an Application L
 
 ## Conventions
 - the listener use port `443` and `HTTPS` protocol
-- taggable resources will have `Name`, `Service`, `Environment`, and `Description` tags; their value can be overriden
+- taggable resources will have `Name`, `Service`, `Environment`, `ProductDomain`, and `Description` tags; their value can be overriden
 - specify 0 in `listener_target_group_idx` to select the default target group
 
 ## License
