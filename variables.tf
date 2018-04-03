@@ -114,16 +114,6 @@ variable "listener_target_group_idx" {
   description = "Indexes, starting from 0, of the `target_group_arns` variable that the listener rules will use when choosing target groups. '0' means the default target group"
 }
 
-variable "r53_record_name" {
-  type        = "string"
-  description = "The route 53's record name"
-}
-
-variable "r53_zone_id" {
-  type        = "string"
-  description = "The route 53's record zone id"
-}
-
 variable "tag_service_name" {
   type        = "string"
   description = "The service name that will be used in tags and resources default name"

@@ -9,18 +9,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-resource "aws_route53_record" "main" {
-  zone_id = "${var.r53_zone_id}"
-  name    = "${local.r53_record_name}"
-  type    = "A"
-
-  alias {
-    name                   = "${aws_lb.main.dns_name}"
-    zone_id                = "${aws_lb.main.zone_id}"
-    evaluate_target_health = true
-  }
-}
-
 resource "aws_lb" "main" {
   name     = "${local.lb_name}"
   internal = "${var.lb_internal}"

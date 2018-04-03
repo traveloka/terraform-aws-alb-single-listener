@@ -95,7 +95,7 @@ resource "aws_lb_target_group" "backend-canary" {
   )}"
 }
 
-module "alb-route53" {
+module "alb-single-listener" {
   source                   = "../.."
   lb_logs_s3_bucket_name   = "gone-with-the-wind"
   tag_service_name         = "fprab-app"
@@ -114,7 +114,5 @@ module "alb-route53" {
   ]
 
   listener_target_group_idx = [1, 2, 0]
-  r53_record_name           = "fpr"
-  r53_zone_id               = "SINGININTHERAIN"
   vpc_id                    = "vpc-a59be0ce"
 }

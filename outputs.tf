@@ -1,6 +1,11 @@
-output "lb-fqdn" {
-  value       = "${aws_route53_record.main.fqdn}"
-  description = "The FQDN of the DNS record that points to the ALB"
+output "lb-dns" {
+  value       = "${aws_lb.main.dns_name}"
+  description = "The DNS name of the load balancer"
+}
+
+output "lb-zone-id" {
+  value       = "${aws_lb.main.zone_id}"
+  description = "The canonical hosted zone ID of the load balancer (to be used in a Route 53 Alias record)"
 }
 
 output "lb-arn" {
