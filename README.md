@@ -1,5 +1,5 @@
 # terraform-aws-alb-single-listener
-A terraform module which provisions a DNS record that points to an Application LB that has a single listener. Listener rules might be added along with a list of target group arns and a listener-target_group mapping.
+A terraform module which provisions an Application LB with a single listener. Listener rules can be added along with a list of target group arns and a listener-target_group mapping.
 
 
 ## Conventions
