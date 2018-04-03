@@ -114,22 +114,22 @@ variable "listener_target_group_idx" {
   description = "Indexes, starting from 0, of the `target_group_arns` variable that the listener rules will use when choosing target groups. '0' means the default target group"
 }
 
-variable "tag_service_name" {
+variable "service_name" {
   type        = "string"
   description = "The service name that will be used in tags and resources default name"
 }
 
-variable "tag_description" {
+variable "description" {
   type        = "string"
   description = "Will be used in resources' Description tag"
 }
 
-variable "tag_environment" {
+variable "environment" {
   type        = "string"
   description = "Will be used in resources' Environment tag"
 }
 
-variable "tag_product_domain" {
+variable "product_domain" {
   type        = "string"
   description = "Abbreviation of the product domain the created resources belong to"
 }

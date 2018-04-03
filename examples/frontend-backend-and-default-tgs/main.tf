@@ -98,10 +98,10 @@ resource "aws_lb_target_group" "backend-canary" {
 module "alb-single-listener" {
   source                   = "../.."
   lb_logs_s3_bucket_name   = "gone-with-the-wind"
-  tag_service_name         = "fprab-app"
-  tag_environment          = "production"
-  tag_product_domain       = "fpr"
-  tag_description          = "Flight AB App's Application Load Balancer"
+  service_name             = "fprab-app"
+  environment              = "production"
+  product_domain           = "fpr"
+  description              = "Flight AB App's Application Load Balancer"
   listener_certificate_arn = "arn:aws:acm:ap-southeast-1:123456789012:certificate/casablanca"
   lb_security_groups       = ["sg-b0c9ed17"]
   lb_subnet_ids            = ["subnet-e099dc3f", "subnet-9eb519e8"]

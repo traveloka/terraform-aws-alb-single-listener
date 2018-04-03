@@ -27,10 +27,10 @@ resource "aws_lb" "main" {
 
   tags = "${merge(map(
     "Name", local.lb_name,
-    "Service", var.tag_service_name,
-    "Environment", var.tag_environment,
-    "ProductDomain", var.tag_product_domain,
-    "Description", var.tag_description,
+    "Service", var.service_name,
+    "Environment", var.environment,
+    "ProductDomain", var.product_domain,
+    "Description", var.description,
     ), var.lb_tags)}"
 }
 
@@ -60,10 +60,10 @@ resource "aws_lb_target_group" "default" {
 
   tags = "${merge(map(
     "Name", local.tg_name,
-    "Service", var.tag_service_name,
-    "Environment", var.tag_environment,
-    "ProductDomain", var.tag_product_domain,
-    "Description", var.tag_description,
+    "Service", var.service_name,
+    "Environment", var.environment,
+    "ProductDomain", var.product_domain,
+    "Description", var.description,
     ), var.tg_tags)}"
 }
 
