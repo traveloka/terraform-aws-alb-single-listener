@@ -28,5 +28,5 @@ locals {
     "matcher"             = "200"
   }
 
-  tg_health_check = "${merge(tg_default_health_check, var.tg_health_check)}"
+  tg_health_check = "${merge(local.tg_default_health_check, var.tg_health_check)}"
 }
