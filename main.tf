@@ -15,7 +15,7 @@ resource "aws_lb" "main" {
 
   security_groups = ["${var.lb_security_groups}"]
 
-  subnets         = "${var.lb_subnet_ids}"
+  subnets         = ["${var.lb_subnet_ids}"]
   idle_timeout    = "${var.lb_idle_timeout}"
   ip_address_type = "${var.lb_ip_address_type}"
 
