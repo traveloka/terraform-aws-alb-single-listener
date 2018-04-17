@@ -31,6 +31,7 @@ resource "aws_lb" "main" {
     "Environment", var.environment,
     "ProductDomain", var.product_domain,
     "Description", var.description,
+    "ManagedBy", "Terraform",
     ), var.lb_tags)}"
 }
 
@@ -64,6 +65,7 @@ resource "aws_lb_target_group" "default" {
     "Environment", var.environment,
     "ProductDomain", var.product_domain,
     "Description", var.description,
+    "ManagedBy", "Terraform",
     ), var.tg_tags)}"
 }
 
