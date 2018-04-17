@@ -144,3 +144,8 @@ variable "vpc_id" {
   type        = "string"
   description = "The default target group's VPC"
 }
+
+variable "cluster_role" {
+  type        = "string"
+  description = "Primary role/function of the cluster. Example value: 'app', 'fe', 'mongod', etc"
+}
