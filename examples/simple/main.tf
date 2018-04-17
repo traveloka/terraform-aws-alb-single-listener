@@ -5,7 +5,8 @@ provider "aws" {
 module "alb-single-listener" {
   source                   = "../.."
   lb_logs_s3_bucket_name   = "lb-logs-bucket"
-  service_name             = "fprbc-app"
+  service_name             = "fprbc"
+  cluster_role             = "app"
   environment              = "production"
   product_domain           = "fpr"
   description              = "Flight BC App's Application Load Balancer"

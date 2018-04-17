@@ -1,9 +1,14 @@
 provider "aws" {
-  region = "ap-southeast-1"
+  region  = "ap-southeast-1"
+  version = "1.14.1"
 }
 
-variable "frontend-condition" {
-  default = [
+locals {
+  product_domain = "fpr"
+  service_name   = "${local.product_domain}ops"
+  vpc_id         = "vpc-14b12345"
+
+  frontend_condition = [
     {
       "field"  = "host-header"
       "values" = ["m.traveloka.com"]
@@ -13,19 +18,15 @@ variable "frontend-condition" {
       "values" = ["/frontend/"]
     },
   ]
-}
 
-variable "backend-canary-condition" {
-  default = [
+  backend_canary_condition = [
     {
       "field"  = "path-pattern"
       "values" = ["/canary/"]
     },
   ]
-}
 
-variable "backend-default-condition" {
-  default = [
+  backend_default_condition = [
     {
       "field"  = "host-header"
       "values" = ["fpr.traveloka.com"]
@@ -33,11 +34,25 @@ variable "backend-default-condition" {
   ]
 }
 
+module "random_fe" {
+  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.4.0"
+
+  name_prefix   = "${format("%s-%s", local.service_name, "fe")}"
+  resource_type = "lb_target_group"
+}
+
+module "random_be" {
+  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.4.0"
+
+  name_prefix   = "${format("%s-%s", local.service_name, "app")}"
+  resource_type = "lb_target_group"
+}
+
 resource "aws_lb_target_group" "frontend" {
-  name                 = "fpr-frontend"
+  name                 = "${module.random_fe.name}"
   port                 = 8080
   protocol             = "HTTP"
-  vpc_id               = "vpc-a59be0ce"
+  vpc_id               = "${local.vpc_id}"
   deregistration_delay = 300
 
   health_check = {
@@ -57,18 +72,21 @@ resource "aws_lb_target_group" "frontend" {
     "enabled"         = true
   }
 
-  tags = "${map(
-    "Name", "fpr-frontend",
-    "Service", "fprfe",
-    "Environment", "production"
-  )}"
+  tags = {
+    Name          = "${module.random_fe.name}"
+    Service       = "${local.service_name}"
+    ProductDomain = "${local.product_domain}"
+    Environment   = "production"
+    Description   = "Target group for ${local.service_name}-fe cluster"
+    ManagedBy     = "Terraform"
+  }
 }
 
 resource "aws_lb_target_group" "backend-canary" {
-  name                 = "fpr-backend-canary"
+  name                 = "${module.random_be.name}"
   port                 = 5000
   protocol             = "HTTP"
-  vpc_id               = "vpc-a59be0ce"
+  vpc_id               = "${local.vpc_id}"
   deregistration_delay = 300
 
   health_check = {
@@ -88,25 +106,29 @@ resource "aws_lb_target_group" "backend-canary" {
     "enabled"         = true
   }
 
-  tags = "${map(
-    "Name", "fpr-backend-canary",
-    "Service", "fprbe",
-    "Environment", "production",
-  )}"
+  tags = {
+    Name          = "${module.random_be.name}"
+    Service       = "${local.service_name}"
+    ProductDomain = "${local.product_domain}"
+    Environment   = "production"
+    Description   = "Target group for ${local.service_name}-app cluster"
+    ManagedBy     = "Terraform"
+  }
 }
 
 module "alb-single-listener" {
   source                   = "../.."
-  lb_logs_s3_bucket_name   = "gone-with-the-wind"
-  service_name             = "fprab-app"
+  lb_logs_s3_bucket_name   = "elb-logs"
+  service_name             = "${local.service_name}"
+  cluster_role             = "app"
   environment              = "production"
-  product_domain           = "fpr"
-  description              = "Flight AB App's Application Load Balancer"
-  listener_certificate_arn = "arn:aws:acm:ap-southeast-1:123456789012:certificate/casablanca"
-  lb_security_groups       = ["sg-b0c9ed17"]
-  lb_subnet_ids            = ["subnet-e099dc3f", "subnet-9eb519e8"]
+  product_domain           = "${local.product_domain}"
+  description              = "Internal load balancer for Flight Product operation service"
+  listener_certificate_arn = "arn:aws:acm:ap-southeast-1:123456789012:certificate/7246d5f5-b4b3-417d-a8b8-123456789012"
+  lb_security_groups       = ["sg-07eb717e"]
+  lb_subnet_ids            = ["subnet-b1123456", "subnet-a0d12345", "subnet-e7607d12"]
 
-  listener_conditions = "${list(var.frontend-condition, var.backend-canary-condition, var.backend-default-condition)}"
+  listener_conditions = "${list(local.frontend_condition, local.backend_canary_condition, local.backend_default_condition)}"
 
   target_group_arns = [
     "${aws_lb_target_group.frontend.arn}",
@@ -114,5 +136,5 @@ module "alb-single-listener" {
   ]
 
   listener_target_group_idx = [1, 2, 0]
-  vpc_id                    = "vpc-a59be0ce"
+  vpc_id                    = "${local.vpc_id}"
 }
