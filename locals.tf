@@ -1,12 +1,20 @@
 module "random_lb" {
-  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.4.0"
+  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.6.0"
 
   name_prefix   = "${format("%s-%s", var.service_name, var.lb_internal ? "lbint" : "lbext")}"
   resource_type = "lb"
+
+  keepers = {
+    lb_internal        = "${var.lb_internal}"
+    lb_ip_address_type = "${var.lb_ip_address_type}"
+    tg_port            = "${var.tg_port}"
+    tg_protocol        = "${var.tg_protocol}"
+    tg_vpc_id          = "${var.vpc_id}"
+  }
 }
 
 module "random_tg" {
-  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.4.0"
+  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.6.0"
 
   name_prefix   = "${format("%s-%s", var.service_name, var.cluster_role)}"
   resource_type = "lb_target_group"
