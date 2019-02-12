@@ -49,6 +49,12 @@ variable "tg_health_check" {
   description = "The default target group's health check configuration, will be merged over the default (see locals.tf)"
 }
 
+variable "tg_target_type" {
+  type        = "string"
+  default     = "instance"
+  description = "The type of target that you must specify when registering targets with this target group."
+}
+
 variable "tg_stickiness" {
   type = "map"
 
