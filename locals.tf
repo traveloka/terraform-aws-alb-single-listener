@@ -30,7 +30,6 @@ locals {
   tg_default_health_check = {
     "interval"            = 30
     "path"                = "/healthcheck"
-    "port"                = 5000
     "healthy_threshold"   = 3
     "unhealthy_threshold" = 3
     "timeout"             = 5
