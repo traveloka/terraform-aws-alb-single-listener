@@ -27,3 +27,13 @@ output "tg_arn_suffix" {
   value       = "${aws_lb_target_group.default.arn_suffix}"
   description = "The arn suffix of the default target group, useful with CloudWatch Metrics"
 }
+
+output "listener_arn" {
+  value       = "The ARN of the listener"
+  description = "${aws_lb_listener.main.arn}"
+}
+
+output "listener_id" {
+  value       = "The ID of the listener"
+  description = "${aws_lb_listener.main.id}"
+}
