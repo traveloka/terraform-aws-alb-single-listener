@@ -29,11 +29,11 @@ output "tg_arn_suffix" {
 }
 
 output "listener_arn" {
-  value       = "The ARN of the listener"
-  description = "${aws_lb_listener.main.arn}"
+  value       = "${aws_lb_listener.main.arn}"
+  description = "The ARN of the listener"
 }
 
 output "listener_id" {
-  value       = "The ID of the listener"
-  description = "${aws_lb_listener.main.id}"
+  value       = "${aws_lb_listener.main.id}"
+  description = "The ID of the listener"
 }
