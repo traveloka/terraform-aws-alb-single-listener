@@ -1,6 +1,5 @@
 provider "aws" {
-  region  = "ap-southeast-1"
-  version = "2.15.0"
+  region = "ap-southeast-1"
 }
 
 locals {
