@@ -116,9 +116,8 @@ resource "aws_lb_listener_rule" "main" {
     type             = "forward"
     target_group_arn = local.target_group_arns[var.listener_target_group_idx[count.index]]
   }
-
   dynamic "condition" {
-    for_each = [var.listener_conditions[count.index]]
+    for_each = var.listener_conditions[count.index]
     content {
       # TF-UPGRADE-TODO: The automatic upgrade tool can't predict
       # which keys might be set in maps assigned here, so it has
@@ -130,4 +129,3 @@ resource "aws_lb_listener_rule" "main" {
     }
   }
 }
-
