@@ -109,7 +109,7 @@ variable "listener_ssl_policy" {
 }
 
 variable "listener_conditions" {
-  type        = list(string)
+  type        = list(map(string))
   default     = []
   description = "List of conditions (https://www.terraform.io/docs/providers/aws/r/lb_listener_rule.html#condition) for the listener rules. A rule can have either 1 or 2 conditions. The rule's order will be its priority, i.e. the first is the highest"
 }
@@ -155,4 +155,3 @@ variable "cluster_role" {
   type        = string
   description = "Primary role/function of the cluster. Example value: 'app', 'fe', 'mongod', etc"
 }
-
