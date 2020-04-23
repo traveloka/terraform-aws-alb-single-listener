@@ -11,7 +11,7 @@ variable "lb_logs_s3_bucket_name" {
 
 variable "lb_internal" {
   type        = string
-  default     = true
+  default     = "1"
   description = "Whether the LB will be public / private"
 }
 
@@ -109,7 +109,7 @@ variable "listener_ssl_policy" {
 }
 
 variable "listener_conditions" {
-  type        = list(object({field=string, values = list(string)}))
+  type        = list(object({path_pattern = list(string)}))
   default     = []
   description = "List of conditions (https://www.terraform.io/docs/providers/aws/r/lb_listener_rule.html#condition) for the listener rules. A rule can have either 1 or 2 conditions. The rule's order will be its priority, i.e. the first is the highest"
 }

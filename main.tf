@@ -108,54 +108,51 @@ resource "aws_lb_listener_rule" "main" {
   }
 
   dynamic "condition" {
-    for_each = var.listener_conditions[count.index]
+    for_each = [var.listener_conditions[count.index]]
     content {
-      field  = lookup(condition.value, "field", null)
-      values = lookup(condition.value, "values", null)
+      # dynamic "host_header" {
+      #   for_each = [lookup(condition.value, "host_header", null)]
+      #   content {
+      #     values = lookup(host_header.value, "host_header", null)
+      #   }
+      # }
 
-      dynamic "host_header" {
-        for_each = [lookup(condition.value, "host_header", null)]
-        content {
-          values = lookup(host_header.value, "values", null)
-        }
-      }
+      # dynamic "http_header" {
+      #   for_each = [lookup(condition.value, "http_header", null)]
+      #   content {
+      #     http_header_name = http_header.value.http_header_name
+      #     values           = http_header.value.values
+      #   }
+      # }
 
-      dynamic "http_header" {
-        for_each = [lookup(condition.value, "http_header", null)]
-        content {
-          http_header_name = http_header.value.http_header_name
-          values           = http_header.value.values
-        }
-      }
-
-      dynamic "http_request_method" {
-        for_each = [lookup(condition.value, "http_request_method", null)]
-        content {
-          values = http_request_method.value.values
-        }
-      }
+      # dynamic "http_request_method" {
+      #   for_each = [lookup(condition.value, "http_request_method", null)]
+      #   content {
+      #     values = http_request_method.value.values
+      #   }
+      # }
 
       dynamic "path_pattern" {
         for_each = [lookup(condition.value, "path_pattern", null)]
         content {
-          values = lookup(path_pattern.value, "values", null)
+          values = path_pattern.value
         }
       }
 
-      dynamic "query_string" {
-        for_each = [lookup(condition.value, "query_string", null)]
-        content {
-          key   = lookup(query_string.value, "key", null)
-          value = query_string.value.value
-        }
-      }
+      # dynamic "query_string" {
+      #   for_each = [lookup(condition.value, "query_string", null)]
+      #   content {
+      #     key   = lookup(query_string.value, "key", null)
+      #     value = query_string.value.value
+      #   }
+      # }
 
-      dynamic "source_ip" {
-        for_each = [lookup(condition.value, "source_ip", null)]
-        content {
-          values = source_ip.value.values
-        }
-      }
+      # dynamic "source_ip" {
+      #   for_each = [lookup(condition.value, "source_ip", null)]
+      #   content {
+      #     values = source_ip.value.values
+      #   }
+      # }
     }
   }
 }
