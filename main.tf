@@ -108,7 +108,7 @@ resource "aws_lb_listener_rule" "main" {
   }
 
   dynamic "condition" {
-    for_each = [var.listener_conditions[count.index]]
+    for_each = var.listener_conditions[count.index]
     content {
       field  = lookup(condition.value, "field", null)
       values = lookup(condition.value, "values", null)
