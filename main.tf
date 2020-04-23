@@ -114,14 +114,14 @@ resource "aws_lb_listener_rule" "main" {
       values = lookup(condition.value, "values", null)
 
       dynamic "host_header" {
-        for_each = lookup(condition.value, "host_header", [])
+        for_each = [lookup(condition.value, "host_header", null)]
         content {
           values = lookup(host_header.value, "values", null)
         }
       }
 
       dynamic "http_header" {
-        for_each = lookup(condition.value, "http_header", [])
+        for_each = [lookup(condition.value, "http_header", null)]
         content {
           http_header_name = http_header.value.http_header_name
           values           = http_header.value.values
@@ -129,21 +129,21 @@ resource "aws_lb_listener_rule" "main" {
       }
 
       dynamic "http_request_method" {
-        for_each = lookup(condition.value, "http_request_method", [])
+        for_each = [lookup(condition.value, "http_request_method", null)]
         content {
           values = http_request_method.value.values
         }
       }
 
       dynamic "path_pattern" {
-        for_each = lookup(condition.value, "path_pattern", [])
+        for_each = [lookup(condition.value, "path_pattern", null)]
         content {
           values = lookup(path_pattern.value, "values", null)
         }
       }
 
       dynamic "query_string" {
-        for_each = lookup(condition.value, "query_string", [])
+        for_each = [lookup(condition.value, "query_string", null)]
         content {
           key   = lookup(query_string.value, "key", null)
           value = query_string.value.value
@@ -151,7 +151,7 @@ resource "aws_lb_listener_rule" "main" {
       }
 
       dynamic "source_ip" {
-        for_each = lookup(condition.value, "source_ip", [])
+        for_each = [lookup(condition.value, "source_ip", null)]
         content {
           values = source_ip.value.values
         }
