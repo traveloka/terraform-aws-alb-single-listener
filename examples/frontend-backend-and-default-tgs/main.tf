@@ -78,7 +78,7 @@ resource "aws_lb_target_group" "frontend" {
     ProductDomain = "${local.product_domain}"
     Environment   = "production"
     Description   = "Target group for ${local.service_name}-fe cluster"
-    ManagedBy     = "Terraform"
+    ManagedBy     = "terraform"
   }
 }
 
@@ -112,7 +112,7 @@ resource "aws_lb_target_group" "backend-canary" {
     ProductDomain = "${local.product_domain}"
     Environment   = "production"
     Description   = "Target group for ${local.service_name}-app cluster"
-    ManagedBy     = "Terraform"
+    ManagedBy     = "terraform"
   }
 }
 

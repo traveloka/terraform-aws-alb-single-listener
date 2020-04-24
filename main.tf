@@ -32,7 +32,7 @@ resource "aws_lb" "main" {
       "Environment"   = var.environment
       "ProductDomain" = var.product_domain
       "Description"   = var.description
-      "ManagedBy"     = "Terraform"
+      "ManagedBy"     = "terraform"
     },
     var.lb_tags,
   )
@@ -90,7 +90,7 @@ resource "aws_lb_target_group" "default" {
       "Environment"   = var.environment
       "ProductDomain" = var.product_domain
       "Description"   = var.description
-      "ManagedBy"     = "Terraform"
+      "ManagedBy"     = "terraform"
     },
     var.tg_tags,
   )
@@ -110,27 +110,12 @@ resource "aws_lb_listener_rule" "main" {
   dynamic "condition" {
     for_each = [var.listener_conditions[count.index]]
     content {
-      # dynamic "host_header" {
-      #   for_each = [lookup(condition.value, "host_header", null)]
-      #   content {
-      #     values = lookup(host_header.value, "host_header", null)
-      #   }
-      # }
-
-      # dynamic "http_header" {
-      #   for_each = [lookup(condition.value, "http_header", null)]
-      #   content {
-      #     http_header_name = http_header.value.http_header_name
-      #     values           = http_header.value.values
-      #   }
-      # }
-
-      # dynamic "http_request_method" {
-      #   for_each = [lookup(condition.value, "http_request_method", null)]
-      #   content {
-      #     values = http_request_method.value.values
-      #   }
-      # }
+      dynamic "host_header" {
+        for_each = [lookup(condition.value, "host_header", null)]
+        content {
+          values = host_header.value
+        }
+      }
 
       dynamic "path_pattern" {
         for_each = [lookup(condition.value, "path_pattern", null)]
@@ -138,21 +123,6 @@ resource "aws_lb_listener_rule" "main" {
           values = path_pattern.value
         }
       }
-
-      # dynamic "query_string" {
-      #   for_each = [lookup(condition.value, "query_string", null)]
-      #   content {
-      #     key   = lookup(query_string.value, "key", null)
-      #     value = query_string.value.value
-      #   }
-      # }
-
-      # dynamic "source_ip" {
-      #   for_each = [lookup(condition.value, "source_ip", null)]
-      #   content {
-      #     values = source_ip.value.values
-      #   }
-      # }
     }
   }
 }
