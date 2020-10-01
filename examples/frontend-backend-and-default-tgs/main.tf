@@ -35,14 +35,14 @@ locals {
 }
 
 module "random_fe" {
-  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.6.0"
+  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.19.1"
 
   name_prefix   = "${format("%s-%s", local.service_name, "fe")}"
   resource_type = "lb_target_group"
 }
 
 module "random_be" {
-  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.6.0"
+  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.19.1"
 
   name_prefix   = "${format("%s-%s", local.service_name, "app")}"
   resource_type = "lb_target_group"
