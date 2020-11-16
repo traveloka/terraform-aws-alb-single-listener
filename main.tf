@@ -22,7 +22,7 @@ resource "aws_lb" "main" {
   access_logs {
     bucket  = var.lb_logs_s3_bucket_name
     prefix  = local.lb_name
-    enabled = true
+    enabled = var.access_logs_enabled
   }
 
   tags = merge(
