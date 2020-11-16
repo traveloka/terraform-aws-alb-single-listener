@@ -158,6 +158,6 @@ variable "cluster_role" {
 
 variable "access_logs_enabled" {
   type = bool
-  default = false
+  default = true
   description = "Enable or disable ALB access log. Example value: 'true', 'false'"
 }
