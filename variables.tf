@@ -56,14 +56,8 @@ variable "tg_target_type" {
 }
 
 variable "tg_stickiness" {
-  type = map(string)
-
-  default = {
-    "type"            = "lb_cookie"
-    "cookie_duration" = 1
-    "enabled"         = true
-  }
-
+  type        = map(string)
+  default     = {}
   description = "The default target group's stickiness configuration"
 }
 

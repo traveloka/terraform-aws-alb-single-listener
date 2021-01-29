@@ -83,7 +83,7 @@ resource "aws_lb_target_group" "default" {
     content {
       cookie_duration = lookup(stickiness.value, "cookie_duration", null)
       enabled         = lookup(stickiness.value, "enabled", null)
-      type            = stickiness.value.type
+      type            = lookup(stickiness.value, "type", null)
     }
   }
 
