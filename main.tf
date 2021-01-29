@@ -49,6 +49,10 @@ resource "aws_lb_listener" "main" {
     target_group_arn = aws_lb_target_group.default.arn
     type             = "forward"
   }
+
+  lifecycle {
+    ignore_changes = ["default_action.0.target_group_arn"]
+  }
 }
 
 resource "aws_lb_target_group" "default" {
