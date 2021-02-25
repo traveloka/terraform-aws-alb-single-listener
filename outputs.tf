@@ -18,19 +18,34 @@ output "lb_arn_suffix" {
   description = "The ARN suffix of the ALB, useful with CloudWatch Metrics"
 }
 
-output "tg_arn" {
-  value       = aws_lb_target_group.default.arn
-  description = "The arn of the default target group"
+output "tg_active_arn" {
+  value       = aws_lb_target_group.init_active.arn
+  description = "The arn of the active target group"
 }
 
-output "tg_arn_suffix" {
-  value       = aws_lb_target_group.default.arn_suffix
-  description = "The arn suffix of the default target group, useful with CloudWatch Metrics"
+output "tg_active_arn_suffix" {
+  value       = aws_lb_target_group.init_active.arn_suffix
+  description = "The arn suffix of the active target group, useful with CloudWatch Metrics"
 }
 
-output "tg_name" {
-  value       = aws_lb_target_group.default.name
-  description = "The name of the target group"
+output "tg_active_name" {
+  value       = aws_lb_target_group.init_active.name
+  description = "The name of the active target group"
+}
+
+output "tg_standby_arn" {
+  value       = aws_lb_target_group.init_active.arn
+  description = "The arn of the standby target group"
+}
+
+output "tg_standby_arn_suffix" {
+  value       = aws_lb_target_group.init_active.arn_suffix
+  description = "The arn suffix of the standby target group, useful with CloudWatch Metrics"
+}
+
+output "tg_standby_name" {
+  value       = aws_lb_target_group.init_active.name
+  description = "The name of the standby target group"
 }
 
 output "listener_arn" {
@@ -42,4 +57,3 @@ output "listener_id" {
   value       = aws_lb_listener.main.id
   description = "The ID of the listener"
 }
-

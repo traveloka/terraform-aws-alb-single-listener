@@ -55,12 +55,6 @@ variable "tg_target_type" {
   description = "The type of target that you must specify when registering targets with this target group."
 }
 
-variable "tg_stickiness" {
-  type        = map(string)
-  default     = {}
-  description = "The default target group's stickiness configuration"
-}
-
 variable "tg_name" {
   type        = string
   default     = ""
@@ -81,7 +75,7 @@ variable "tg_protocol" {
 
 variable "tg_deregistration_delay" {
   type        = string
-  default     = 300
+  default     = 180
   description = "The default target group's deregistration delay"
 }
 

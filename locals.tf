@@ -18,14 +18,14 @@ module "random_lb" {
 }
 
 module "random_tg" {
-  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.18.1"
+  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.19.1"
 
   name_prefix   = format("%s-%s", var.service_name, var.cluster_role)
   resource_type = "lb_target_group"
 }
 
 module "random_tg_standby" {
-  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.18.1"
+  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.19.1"
 
   name_prefix   = format("%s-%s", var.service_name, var.cluster_role)
   resource_type = "lb_target_group"
@@ -35,7 +35,7 @@ locals {
   lb_name           = var.lb_name == "" ? module.random_lb.name : var.lb_name
   tg_name           = var.tg_name == "" ? module.random_tg.name : var.tg_name
   tg_name_standby   = module.random_tg_standby.name
-  target_group_arns = concat([aws_lb_target_group.default.arn], var.target_group_arns)
+  target_group_arns = concat([aws_lb_target_group.init_active.arn], var.target_group_arns)
 }
 
 locals {
