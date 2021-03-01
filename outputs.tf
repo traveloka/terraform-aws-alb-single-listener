@@ -34,17 +34,17 @@ output "tg_active_name" {
 }
 
 output "tg_standby_arn" {
-  value       = aws_lb_target_group.init_active.arn
+  value       = aws_lb_target_group.init_standby.arn
   description = "The arn of the standby target group"
 }
 
 output "tg_standby_arn_suffix" {
-  value       = aws_lb_target_group.init_active.arn_suffix
+  value       = aws_lb_target_group.init_standby.arn_suffix
   description = "The arn suffix of the standby target group, useful with CloudWatch Metrics"
 }
 
 output "tg_standby_name" {
-  value       = aws_lb_target_group.init_active.name
+  value       = aws_lb_target_group.init_standby.name
   description = "The name of the standby target group"
 }
 
