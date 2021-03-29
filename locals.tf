@@ -18,7 +18,7 @@ module "random_lb" {
 }
 
 module "random_tg" {
-  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.18.1"
+  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.19.1"
 
   name_prefix   = format("%s-%s", var.service_name, var.cluster_role)
   resource_type = "lb_target_group"
