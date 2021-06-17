@@ -97,6 +97,17 @@ variable "tg_tags" {
   description = "The additional Target Group tags that will be merged over the default tags"
 }
 
+variable "listener_port" {
+  type        = string
+  default     = 443
+  description = "The LB listener's port"
+}
+
+variable "listener_protocol" {
+  type        = string
+  default     = "HTTPS"
+  description = "The LB listener's protocol"
+}
 variable "listener_certificate_arn" {
   type        = string
   description = "The LB listener's certificate ARN"

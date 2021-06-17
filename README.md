@@ -56,6 +56,8 @@ A terraform module which provisions a DNS record that points to an Application L
 | tg_protocol | The default target group's protocol. | `string` | `HTTP` | no |
 | tg_deregistration_delay | The default target group's deregistration delay. | `string` | `300` | no |
 | tg_tags | The additional Target Group tags that will be merged over the default tags. | `map` | `{}` | no |
+| listener_port | The LB listener's port. | `string` | `443` | yes |
+| listener_protocol | The LB listener's protocol. | `string` | `HTTPS` | yes |
 | listener_certificate_arn | The LB listener's certificate ARN. | `string` | n/a | yes if `tg_protocol` is set to HTTPS |
 | listener_ssl_policy | The LB listener's SSL policy. | `string` | `ELBSecurityPolicy-2016-08` | no |
 | listener_conditions | List of conditions (https://www.terraform.io/docs/providers/aws/r/lb_listener_rule.html#condition) for the listener rules. A rule can have either 1 or 2 conditions. The rule's order will be its priority, i.e. the first is the highest. | `list` | `[]` | no |

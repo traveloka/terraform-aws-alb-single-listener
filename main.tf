@@ -40,8 +40,8 @@ resource "aws_lb" "main" {
 
 resource "aws_lb_listener" "main" {
   load_balancer_arn = aws_lb.main.arn
-  port              = 443
-  protocol          = "HTTPS"
+  port              = var.listener_port
+  protocol          = var.listener_protocol
   ssl_policy        = var.listener_ssl_policy
   certificate_arn   = var.listener_certificate_arn
 
