@@ -59,6 +59,7 @@ resource "aws_lb_target_group" "init_active" {
   name                 = local.tg_name
   port                 = var.tg_port
   protocol             = var.tg_protocol
+  protocol_version     = var.tg_protocol_version
   vpc_id               = var.vpc_id
   deregistration_delay = var.tg_deregistration_delay
   target_type          = var.tg_target_type
