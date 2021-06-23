@@ -54,6 +54,7 @@ A terraform module which provisions a DNS record that points to an Application L
 | tg_name | The default target group's name, will override the default <service_name>-default name. | `string` | n/a | no |
 | tg_port | The default target group's port. | `string` | `5000` | no |
 | tg_protocol | The default target group's protocol. | `string` | `HTTP` | no |
+| tg_protocol_version | The default target group's protocol version. | `string` | `HTTP1` | no |
 | tg_deregistration_delay | The default target group's deregistration delay. | `string` | `300` | no |
 | tg_tags | The additional Target Group tags that will be merged over the default tags. | `map` | `{}` | no |
 | listener_port | The LB listener's port. | `string` | `443` | yes |

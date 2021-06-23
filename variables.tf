@@ -85,6 +85,12 @@ variable "tg_protocol" {
   description = "The default target group's protocol"
 }
 
+variable "tg_protocol_version" {
+  type        = string
+  default     = "HTTP1"
+  description = "The default target group's protocol version"
+}
+
 variable "tg_deregistration_delay" {
   type        = string
   default     = 300
