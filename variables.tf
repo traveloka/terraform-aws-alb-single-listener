@@ -113,6 +113,12 @@ variable "listener_ssl_policy" {
   description = "The LB listener's SSL policy"
 }
 
+variable "listener_rules" {
+  type        = map
+  default     = {}
+  description = "A map of map, for listener rules: priority --> {target_group_arn:'', conditions:[]}"
+}
+
 variable "listener_conditions" {
   type        = list(map(list(string)))
   default     = []

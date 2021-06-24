@@ -35,7 +35,6 @@ locals {
   lb_name           = var.lb_name == "" ? module.random_lb.name : var.lb_name
   tg_name           = var.tg_name == "" ? module.random_tg.name : var.tg_name
   tg_name_standby   = module.random_tg_standby.name
-  target_group_arns = concat([aws_lb_target_group.init_active.arn], var.target_group_arns)
 }
 
 locals {
