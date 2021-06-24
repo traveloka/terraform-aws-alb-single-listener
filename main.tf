@@ -51,7 +51,7 @@ resource "aws_lb_listener" "main" {
   }
 
   lifecycle {
-    ignore_changes = ["default_action[0].target_group_arn"]
+    ignore_changes = [default_action[0].target_group_arn]
   }
 }
 
