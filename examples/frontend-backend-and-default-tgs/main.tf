@@ -129,9 +129,9 @@ module "alb-single-listener" {
   lb_subnet_ids            = ["subnet-b1123456", "subnet-a0d12345", "subnet-e7607d12"]
 
   listener_rules = {
-    0 = {target=aws_lb_target_group.frontend.arn, conditions=local.frontend_conditions},
-    10 = {target=null, conditions=local.backend_default_conditions},
-    99 = {target=aws_lb_target_group.backend-canary.arn, conditions=local.backend_canary_conditions},
+    0 = {target_group_arn=aws_lb_target_group.frontend.arn, conditions=local.frontend_conditions},
+    10 = {target_group_arn=null, conditions=local.backend_default_conditions},
+    99 = {target_group_arn=aws_lb_target_group.backend-canary.arn, conditions=local.backend_canary_conditions},
   }
 
   vpc_id                    = "${local.vpc_id}"
