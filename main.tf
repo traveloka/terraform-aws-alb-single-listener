@@ -107,16 +107,15 @@ resource "aws_lb_listener_rule" "custom" {
     for_each = each.value["conditions"]
     content {
       dynamic "host_header" {
-        for_each = lookup(condition.value, "host_header", null) != null ? [" using host header "] : []
+        for_each = lookup(condition.value, "field", null) == "host-header" ? [" using host header "] : []
         content {
-          values = lookup(condition.value, "host_header")
+          values = lookup(condition.value, "values", null)
         }
       }
-
       dynamic "path_pattern" {
-        for_each = lookup(condition.value, "path_pattern", null) != null ? [" using path pattern "] : []
+        for_each = lookup(condition.value, "field", null) == "path-pattern" ? [" using path pattern "] : []
         content {
-          values = lookup(condition.value, "path_pattern")
+          values = lookup(condition.value, "values", null)
         }
       }
     }
@@ -135,19 +134,27 @@ resource "aws_lb_listener_rule" "builtin" {
   }
 
   dynamic "condition" {
+    # each.value here contains a list of conditions, e.g.
+    # [{
+    #     "field"  = "host-header"
+    #     "values" = ["m.traveloka.com"]
+    #   },
+    #   {
+    #     "field"  = "path-pattern"
+    #     "values" = ["/frontend/"]
+    # }]
     for_each = each.value
     content {
       dynamic "host_header" {
-        for_each = lookup(condition.value, "host_header", null) != null ? [" using host header "] : []
+        for_each = lookup(condition.value, "field", null) == "host-header" ? [" using host header "] : []
         content {
-          values = lookup(condition.value, "host_header")
+          values = lookup(condition.value, "values", null)
         }
       }
-
       dynamic "path_pattern" {
-        for_each = lookup(condition.value, "path_pattern", null) != null ? [" using path pattern "] : []
+        for_each = lookup(condition.value, "field", null) == "path-pattern" ? [" using path pattern "] : []
         content {
-          values = lookup(condition.value, "path_pattern")
+          values = lookup(condition.value, "values", null)
         }
       }
     }
