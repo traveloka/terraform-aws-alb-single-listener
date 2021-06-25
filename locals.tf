@@ -38,6 +38,8 @@ locals {
 }
 
 locals {
+  listener_rules_builtin = { for k,v in var.listener_rules : k => v if lookup(v, "target_group_arn", null) == null }
+  listener_rules_custom = { for k,v in var.listener_rules : k => v if lookup(v, "target_group_arn", null) != null }
   tg_default_health_check = {
     "interval"            = 30
     "path"                = "/healthcheck"

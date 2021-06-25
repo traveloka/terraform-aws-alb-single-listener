@@ -113,16 +113,11 @@ variable "listener_ssl_policy" {
   description = "The LB listener's SSL policy"
 }
 
-variable "listener_rules_builtin" {
-  type        = map
-  default     = {}
-  description = "A map of listener rules which target the built-in target group: priority --> conditions:[]"
-}
 
-variable "listener_rules_custom" {
+variable "listener_rules" {
   type        = map
   default     = {}
-  description = "A map of listener rules which target the supplied target groups: priority --> {target_group_arn:'', conditions:[]}"
+  description = "A map of listener rules: priority --> {target_group_arn:'', conditions:[]}. 'target_group_arn:null' means the builtin target group"
 }
 
 variable "service_name" {
