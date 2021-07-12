@@ -92,37 +92,77 @@ resource "aws_lb_target_group" "init_active" {
   )
 }
 
-resource "aws_lb_listener_rule" "main" {
-  count        = length(var.listener_conditions)
+resource "aws_lb_listener_rule" "custom" {
+  for_each = local.listener_rules_custom
   listener_arn = aws_lb_listener.main.arn
 
-  priority = count.index + 1
+  priority = each.key
 
   action {
     type             = "forward"
-    target_group_arn = local.target_group_arns[var.listener_target_group_idx[count.index]]
+    target_group_arn = each.value["target_group_arn"]
   }
 
   dynamic "condition" {
-    for_each = [var.listener_conditions[count.index]]
+    for_each = each.value["conditions"]
     content {
       dynamic "host_header" {
-        for_each = lookup(condition.value, "host_header", null) != null ? [" using host header "] : []
+        for_each = lookup(condition.value, "field", null) == "host-header" ? [" using host header "] : []
         content {
-          values = lookup(condition.value, "host_header")
+          values = lookup(condition.value, "values", null)
         }
       }
-
       dynamic "path_pattern" {
-        for_each = lookup(condition.value, "path_pattern", null) != null ? [" using path pattern "] : []
+        for_each = lookup(condition.value, "field", null) == "path-pattern" ? [" using path pattern "] : []
         content {
-          values = lookup(condition.value, "path_pattern")
+          values = lookup(condition.value, "values", null)
         }
       }
     }
   }
 }
 
+resource "aws_lb_listener_rule" "builtin" {
+  for_each = local.listener_rules_builtin
+  listener_arn = aws_lb_listener.main.arn
+
+  priority = each.key
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.init_active.arn
+  }
+
+  dynamic "condition" {
+    # each.value["conditions"] here contains a list of conditions, e.g.
+    # [{
+    #     "field"  = "host-header"
+    #     "values" = ["m.traveloka.com"]
+    #   },
+    #   {
+    #     "field"  = "path-pattern"
+    #     "values" = ["/frontend/"]
+    # }]
+    for_each = each.value["conditions"]
+    content {
+      dynamic "host_header" {
+        for_each = lookup(condition.value, "field", null) == "host-header" ? [" using host header "] : []
+        content {
+          values = lookup(condition.value, "values", null)
+        }
+      }
+      dynamic "path_pattern" {
+        for_each = lookup(condition.value, "field", null) == "path-pattern" ? [" using path pattern "] : []
+        content {
+          values = lookup(condition.value, "values", null)
+        }
+      }
+    }
+  }
+  lifecycle {
+    ignore_changes = [action[0].target_group_arn]
+  }
+}
 
 resource "aws_lb_target_group" "init_standby" {
   name                 = local.tg_name_standby

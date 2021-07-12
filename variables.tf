@@ -113,16 +113,11 @@ variable "listener_ssl_policy" {
   description = "The LB listener's SSL policy"
 }
 
-variable "listener_conditions" {
-  type        = list(map(list(string)))
-  default     = []
-  description = "List of conditions (https://www.terraform.io/docs/providers/aws/r/lb_listener_rule.html#condition) for the listener rules. A rule can have either 1 or 2 conditions. The rule's order will be its priority, i.e. the first is the highest"
-}
 
-variable "listener_target_group_idx" {
-  type        = list(string)
-  default     = []
-  description = "Indexes, starting from 0, of the `target_group_arns` variable that the listener rules will use when choosing target groups. '0' means the default target group"
+variable "listener_rules" {
+  type        = map
+  default     = {}
+  description = "A map of listener rules: priority --> {target_group_arn:'', conditions:[]}. 'target_group_arn:null' means the builtin target group"
 }
 
 variable "service_name" {
@@ -145,15 +140,9 @@ variable "product_domain" {
   description = "Abbreviation of the product domain the created resources belong to"
 }
 
-variable "target_group_arns" {
-  type        = list(string)
-  default     = []
-  description = "A list of target group arns, will be used by listener rules using `listener_target_group_idx` variable"
-}
-
 variable "vpc_id" {
   type        = string
-  description = "The default target group's VPC"
+  description = "The built-in target group's VPC"
 }
 
 variable "cluster_role" {
