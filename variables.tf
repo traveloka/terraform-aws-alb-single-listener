@@ -104,7 +104,7 @@ variable "listener_protocol" {
 }
 variable "listener_certificate_arn" {
   type        = string
-  description = "The LB listener's certificate ARN"
+  description = "The LB listener's default certificate ARN"
 }
 
 variable "listener_ssl_policy" {

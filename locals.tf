@@ -32,17 +32,17 @@ module "random_tg_standby" {
 }
 
 locals {
-  lb_name           = var.lb_name == "" ? module.random_lb.name : var.lb_name
-  tg_name           = var.tg_name == "" ? module.random_tg.name : var.tg_name
-  tg_name_standby   = module.random_tg_standby.name
+  lb_name         = var.lb_name == "" ? module.random_lb.name : var.lb_name
+  tg_name         = var.tg_name == "" ? module.random_tg.name : var.tg_name
+  tg_name_standby = module.random_tg_standby.name
 }
 
 locals {
   # as of terraform 0.12.31, it's not possible to have dynamic "ignore_changes"
   # https://github.com/hashicorp/terraform/issues/24188
   # so we need to separate rules that target the built-in target group (which changes should be ignored), from those that don't.
-  listener_rules_builtin = { for k,v in var.listener_rules : k => v if lookup(v, "target_group_arn", null) == null }
-  listener_rules_custom = { for k,v in var.listener_rules : k => v if lookup(v, "target_group_arn", null) != null }
+  listener_rules_builtin = { for k, v in var.listener_rules : k => v if lookup(v, "target_group_arn", null) == null }
+  listener_rules_custom  = { for k, v in var.listener_rules : k => v if lookup(v, "target_group_arn", null) != null }
 
   tg_default_health_check = {
     "interval"            = 30

@@ -93,7 +93,7 @@ resource "aws_lb_target_group" "init_active" {
 }
 
 resource "aws_lb_listener_rule" "custom" {
-  for_each = local.listener_rules_custom
+  for_each     = local.listener_rules_custom
   listener_arn = aws_lb_listener.main.arn
 
   priority = each.key
@@ -123,7 +123,7 @@ resource "aws_lb_listener_rule" "custom" {
 }
 
 resource "aws_lb_listener_rule" "builtin" {
-  for_each = local.listener_rules_builtin
+  for_each     = local.listener_rules_builtin
   listener_arn = aws_lb_listener.main.arn
 
   priority = each.key
