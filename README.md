@@ -59,15 +59,13 @@ A terraform module which provisions a DNS record that points to an Application L
 | tg_tags | The additional Target Group tags that will be merged over the default tags. | `map` | `{}` | no |
 | listener_port | The LB listener's port. | `string` | `443` | yes |
 | listener_protocol | The LB listener's protocol. | `string` | `HTTPS` | yes |
-| listener_certificate_arn | The LB listener's certificate ARN. | `string` | n/a | yes if `tg_protocol` is set to HTTPS |
+| listener_rules | A map of listener rules for the LB: priority --> {target_group_arn:'', conditions:[]}. `target_group_arn:null` means the built-in target group | `list` | `[]` | no |
+| listener_certificate_arn | The LB listener's default certificate ARN. | `string` | n/a | yes if `tg_protocol` is set to HTTPS |
 | listener_ssl_policy | The LB listener's SSL policy. | `string` | `ELBSecurityPolicy-2016-08` | no |
-| listener_conditions | List of conditions (https://www.terraform.io/docs/providers/aws/r/lb_listener_rule.html#condition) for the listener rules. A rule can have either 1 or 2 conditions. The rule's order will be its priority, i.e. the first is the highest. | `list` | `[]` | no |
-| listener_target_group_idx | Indexes, starting from 0, of the `target_group_arns` variable that the listener rules will use when choosing target groups. '0' means the default target group. | `list` | `[]` | no |
 | service_name | The service name that will be used in tags and resources default name. | `string` | n/a | yes |
 | description | Will be used in resources' Description tag. | `string` | n/a | yes |
 | environment | Will be used in resources' Environment tag. | `string` | n/a | yes |
 | product_domain | Abbreviation of the product domain the created resources belong to. | `string` | n/a | yes |
-| target_group_arns | A list of target group arns, will be used by listener rules using `listener_target_group_idx` variable. | `list` | `[]` | no |
 | vpc_id | The default target group's VPC. | `string` | n/a | yes |
 | cluster_role | Primary role/function of the cluster. Example value: 'app', 'fe', 'mongod', etc. | `string` | n/a | yes |
 

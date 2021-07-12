@@ -117,7 +117,7 @@ variable "listener_ssl_policy" {
 variable "listener_rules" {
   type        = map
   default     = {}
-  description = "A map of listener rules: priority --> {target_group_arn:'', conditions:[]}. 'target_group_arn:null' means the builtin target group"
+  description = "A map of listener rules for the LB: priority --> {target_group_arn:'', conditions:[]}. 'target_group_arn:null' means the built-in target group"
 }
 
 variable "service_name" {
